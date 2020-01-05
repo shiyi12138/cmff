@@ -1,5 +1,7 @@
 package com.baizhi.serviceImpl;
 
+import com.baizhi.annotation.ClearCache;
+import com.baizhi.annotation.MyInclude;
 import com.baizhi.dao.ChapterDao;
 import com.baizhi.entity.Chapter;
 import com.baizhi.service.ChapterService;
@@ -28,6 +30,7 @@ public class ChapterServiceImpl implements ChapterService {
     private ChapterDao chapterDao;
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @MyInclude
     public Map<String, Object> selectByPage(Integer page, Integer count,String aid) {
         //数据
         List<Chapter> chapters = chapterDao.selectByPage((page - 1) * count, count,aid);
@@ -48,21 +51,26 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @ClearCache
     public void append(String id, String size, String time, String src) {
         chapterDao.append(id,size,time,src);
     }
 
     @Override
+    @ClearCache
     public void delAll(String[] id) {
         chapterDao.delAll(id);
     }
 
     @Override
+    @ClearCache
     public void updateChapter(Chapter chapter) {
         chapterDao.updateChapter(chapter);
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<VoChapter> selectAllByAid(String id) {
         List<VoChapter> voChapters = chapterDao.selectAllByAid(id);
         for (VoChapter voChapter : voChapters) {

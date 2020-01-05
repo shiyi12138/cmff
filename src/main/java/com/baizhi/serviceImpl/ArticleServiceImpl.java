@@ -1,5 +1,7 @@
 package com.baizhi.serviceImpl;
 
+import com.baizhi.annotation.ClearCache;
+import com.baizhi.annotation.MyInclude;
 import com.baizhi.dao.ArticleDao;
 import com.baizhi.dao.UserDao;
 import com.baizhi.entity.Article;
@@ -25,6 +27,7 @@ public class ArticleServiceImpl implements ArticleService {
     private UserDao userDao;
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @MyInclude
     public Map<String, Object> selectByPage(Integer page, Integer rows) {
         Map<String, Object> map=new HashMap<>();
         int start=(page-1)*rows;
@@ -42,10 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearCache
     public void delAll(String[] id) {
         articleDao.delAll(id);
     }
     @Override
+    @ClearCache
     public boolean insert(Article article,String path) {
         //先去查一下有没有这个上师先省略了
         //生出id
@@ -73,6 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @ClearCache
     public Article selectById(String id, String path, HttpSession session) {
         Article article = articleDao.selectById(id);
         BufferedReader bufferedReader=null;
@@ -99,6 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
     //修改
     @Override
+    @ClearCache
     public void update(Article article,String path, HttpSession session) {
         if (!article.getContent().equals("")){
             String  filename = (String) session.getAttribute("filename");
@@ -122,6 +129,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Cover> select3Time(String uid) {
         //通过uid查询所属上师的id
         String gid = userDao.selectGid(uid);
@@ -134,6 +143,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Cover> selectByID(String uid) {
         //通过uid查询所属上师的id
         String gid = userDao.selectGid(uid);
@@ -146,6 +157,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Cover> selectByNoID(String uid) {
         //通过uid查询所属上师的id
         String gid = userDao.selectGid(uid);

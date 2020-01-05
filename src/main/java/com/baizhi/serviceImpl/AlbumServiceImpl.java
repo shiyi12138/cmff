@@ -1,5 +1,6 @@
 package com.baizhi.serviceImpl;
 
+import com.baizhi.annotation.MyInclude;
 import com.baizhi.dao.AlbumDao;
 import com.baizhi.entity.Album;
 import com.baizhi.service.AlbumService;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private AlbumDao albumDao;
+    @MyInclude
     @Transactional(propagation = Propagation.SUPPORTS)
     public Map<String,Object> selectByPage(Integer page, Integer count) {
         //数据
@@ -36,6 +38,8 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Cover> select6Time() {
         List<Cover> covers = albumDao.select6Time();
         for (Cover cover : covers) {
@@ -47,6 +51,8 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @MyInclude
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Cover> selectAll() {
         List<Cover> covers = albumDao.selectAll();
         for (Cover cover : covers) {
@@ -58,6 +64,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @MyInclude
     public VoAlbum selectById(String id) {
         VoAlbum voAlbum = albumDao.selectById(id);
         voAlbum.setThumbnail("http://"+voAlbum.getThumbnail());

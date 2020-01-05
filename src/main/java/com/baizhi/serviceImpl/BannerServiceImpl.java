@@ -2,6 +2,8 @@ package com.baizhi.serviceImpl;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.baizhi.annotation.ClearCache;
+import com.baizhi.annotation.MyInclude;
 import com.baizhi.dao.BannerDao;
 import com.baizhi.entity.Banner;
 import com.baizhi.entity.Teacher;
@@ -23,6 +25,7 @@ public class BannerServiceImpl implements BannerService {
     private BannerDao bannerDao;
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @MyInclude
     public Map<String, Object> selectByPage(Integer page, Integer rows) {
         Map<String, Object> map=new HashMap<>();
         int start=(page-1)*rows;
@@ -38,6 +41,7 @@ public class BannerServiceImpl implements BannerService {
         map.put("records",counts);
         return map;
     }
+    @ClearCache
     public String insert(Banner banner) {
         String id = getID();
         banner.setId(id);
@@ -45,16 +49,19 @@ public class BannerServiceImpl implements BannerService {
         return id;
     }
     //修改图片路径
+    @ClearCache
     public void updateSrc(String src, String id) {
         bannerDao.updateSrc(src,id);
     }
 
     //批量删除
+    @ClearCache
     public void delAll(String[] ids) {
         bannerDao.delAll(ids);
     }
 
     //修改
+    @ClearCache
     public void updateBanner(Banner banner) {
         bannerDao.updateBanner(banner);
     }

@@ -21,6 +21,10 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd
+  redis:
+    port: 6379
+    host: 192.168.23.7
+    database: 0
 mybatis:
   type-aliases-package: com.baizhi.entity
   mapper-locations: mapper/*.xml

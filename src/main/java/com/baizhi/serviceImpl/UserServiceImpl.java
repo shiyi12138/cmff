@@ -1,6 +1,8 @@
 package com.baizhi.serviceImpl;
 
 import com.alibaba.fastjson.JSON;
+import com.baizhi.annotation.ClearCache;
+import com.baizhi.annotation.MyInclude;
 import com.baizhi.dao.UserDao;
 import com.baizhi.entity.Echarts;
 import com.baizhi.entity.Vo;
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Override
+    @MyInclude
     @Transactional(propagation = Propagation.SUPPORTS)
     public int[] select7Num() {
         List<Vo> list = userDao.select7Num();
@@ -34,6 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @MyInclude
     @Transactional(propagation = Propagation.SUPPORTS)
     public int[] selectMonthNum() {
         List<Vo> vos = userDao.selectMonthNum();
@@ -47,11 +51,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @MyInclude
     public List<Echarts> selectTotalCount() {
         return userDao.selectTotalCount();
     }
 
     @Override
+    @ClearCache
     public void del(String id) {
         userDao.del(id);
     }
