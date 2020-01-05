@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao" >
+  <sql id="Base_Column_List" >
+    ID, TITLE, AUTHOR, CONTENT, GURU_ID, CREATE_DATE, STATUS, OTHER
+  </sql>
+  <select id="selectByPage" resultType="Article">
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    limit #{start},#{count}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from article
+  </select>
+  <delete id="delAll">
+    delete from article where id in
+    <foreach collection="array" open="(" close=")" separator="," item="id">
+      #{id}
+    </foreach>
+  </delete>
+  <insert id="insert">
+    insert into article(id,title,author,content,guru_Id,create_Date,status) values (#{id},#{title},#{author},#{content},#{guru_Id},#{create_Date},#{status})
+  </insert>
+  <select id="selectById" resultType="Article">
+    select
+    <include refid="Base_Column_List" />
+    from article
+    where id=#{id}
+  </select>
+  <update id="update">
+     update article set title=#{title},author=#{author},create_date=#{create_Date},status=#{status} where id=#{id}
+  </update>
+  <select id="select3Time" resultType="com.baizhi.vo.Cover">
+      SELECT a.TITLE title,g.HEAD_IMG thumbnail,a.AUTHOR author,a.CREATE_DATE create_date FROM article a JOIN guru g ON a.GURU_ID=g.ID WHERE a.GURU_ID=#{id} ORDER BY a.CREATE_DATE DESC LIMIT 0,3
+  </select>
+  <select id="selectByID" resultType="com.baizhi.vo.Cover">
+       SELECT a.TITLE title,g.HEAD_IMG thumbnail,a.AUTHOR author,a.CREATE_DATE create_date FROM article a JOIN guru g ON a.GURU_ID=g.ID WHERE a.GURU_ID=#{gid}
+  </select>
+  <select id="selectByNoID" resultType="com.baizhi.vo.Cover">
+       SELECT a.TITLE title,g.HEAD_IMG thumbnail,a.AUTHOR author,a.CREATE_DATE create_date FROM article a JOIN guru g ON a.GURU_ID=g.ID WHERE a.GURU_ID!=#{gid} ORDER BY a.CREATE_DATE DESC LIMIT 0,8
+  </select>
+</mapper>

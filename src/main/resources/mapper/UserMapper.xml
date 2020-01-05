@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao" >
+  <sql id="Base_Column_List" >
+    ID, PHONE_NUMBER, PASSWORD, NAME, DHARMA, HEAD_IMG, SEX, ADDRESS, SIGN, GURU_ID, 
+    LAST_DATE, CREATE_DATE, STATUS, SALT, OTHER
+  </sql>
+    <select id="select7Num" resultType="Vo">
+         select DateDiff(NOW(),CREATE_DATE) month,COUNT(*) count from t_user where DateDiff(NOW(),CREATE_DATE)  in (0,1,2,3,4,5,6) GROUP BY DateDiff(NOW(),CREATE_DATE)
+    </select>
+  <select id="selectMonthNum" resultType="Vo">
+      select MONTH(CREATE_DATE) month,count(*) count from t_user  group by MONTH(CREATE_DATE)
+  </select>
+  <select id="selectTotalCount" resultType="Echarts">
+     SELECT ADDRESS name,COUNT(*) value FROM t_user GROUP BY ADDRESS
+  </select>
+    <insert id="insert">
+        insert into t_user values (#{id},#{phoneNumber},#{password},#{name},#{dharma},#{head_Img},#{sex},#{address},#{sign},#{guru_Id},#{last_Date},#{create_Date},#{status},#{salt},#{other})
+    </insert>
+    <delete id="del">
+        delete from t_user where id=#{id}
+    </delete>
+    <select id="selectGid" resultType="java.lang.String">
+        SELECT GURU_ID FROM t_user WHERE id=#{uid}
+    </select>
+</mapper>

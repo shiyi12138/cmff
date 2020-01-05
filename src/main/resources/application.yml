@@ -1,0 +1,30 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /cmff
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cmff
+    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    username: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+    date-format: yyyy-MM-dd
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd
+mybatis:
+  type-aliases-package: com.baizhi.entity
+  mapper-locations: mapper/*.xml
+logging:
+  level:
+    root: info
+    com.baizhi.dao: debug

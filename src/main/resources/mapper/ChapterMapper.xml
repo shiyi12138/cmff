@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDao">
+    <sql id="Base_Column_List">
+    ID, TITLE, ALBUM_ID, SIZE, DURATION, SRC, STATUS, OTHER,CREATE_DATE
+  </sql>
+    <select id="selectByPage" resultType="Chapter">
+        select
+        <include refid="Base_Column_List"/>
+        from chapter where ALBUM_ID=#{aid}
+        limit #{start},#{count}
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from chapter where ALBUM_ID=#{aid}
+   </select>
+    <insert id="insert">
+    insert into chapter(id,title,album_id,status,create_date) values(#{id},#{title},#{album_id},#{status},#{create_date})
+  </insert>
+    <update id="append">
+      update chapter set size=#{size},DURATION=#{time},SRC=#{src} where id=#{id}
+  </update>
+    <delete id="delAll">
+        delete from chapter where id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateChapter">
+        update chapter set title=#{title},create_date=#{create_date},status=#{status} where id=#{id}
+    </update>
+    <select id="selectAllByAid" resultType="com.baizhi.vo.VoChapter">
+        SELECT TITLE,SRC download_url,SIZE,DURATION FROM chapter WHERE ALBUM_ID=#{id}
+    </select>
+</mapper>
