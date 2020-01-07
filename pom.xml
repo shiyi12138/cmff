@@ -158,6 +158,12 @@
             <version>1.1.0</version>
         </dependency>
 
+        <!--shiro web-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.4.2</version>
+        </dependency>
     </dependencies>
     <!--maven仓库中没有goeasy的依赖，需要指定下载路径-->
     <repositories>

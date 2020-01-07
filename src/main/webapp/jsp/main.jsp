@@ -1,4 +1,5 @@
 <%@page pageEncoding="UTF-8" isELIgnored="false" contentType="text/html; UTF-8" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -52,9 +53,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" onclick="outPoi()">管理员导出</a></li>
-                <li><a href="#">欢迎:</a></li>
+                <li><a href="#">欢迎: <shiro:principal></shiro:principal></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/admin/logOut" class="dropdown-toggle">
                         退出登录
                         <span class="glyphicon glyphicon-log-out"></span>
                     </a>
@@ -109,6 +110,7 @@
                         </div>
                     </div>
                 </div>
+                <shiro:hasPermission name="article:*:*">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingFore">
                         <h4 class="panel-title">
@@ -123,6 +125,8 @@
                         </div>
                     </div>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="banner:*:*">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingFive">
                         <h4 class="panel-title">
@@ -137,6 +141,23 @@
                         </div>
                     </div>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasRole name="superadmin">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingsix">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                管理员管理
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapsesix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingsix">
+                        <div class="panel-body">
+                            <a class="btn btn-danger btn-block" href="#">管理员管理</a>
+                        </div>
+                    </div>
+                </div>
+                </shiro:hasRole>
             </div>
         </div>
         <div class="col-sm-10" id="content">

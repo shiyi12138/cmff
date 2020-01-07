@@ -4,7 +4,16 @@
     <select id="selectAdminByName" resultType="Admin">
         select * from admin where username=#{name} and password=#{password}
     </select>
+    <select id="selectAdmin" resultType="Admin">
+        select * from admin where username=#{name}
+    </select>
     <select id="selectAll" resultType="Admin">
         select * from admin
+    </select>
+    <select id="selectAllRole" resultType="java.lang.String">
+        SELECT r.role FROM admin_role ar JOIN role r ON ar.role_id=r.id where username =#{username}
+    </select>
+    <select id="selectAllPremission" resultType="java.lang.String">
+        SELECT j.jurisdiction FROM role_j rj JOIN jurisdiction j ON j.id=rj.j_id where rj.role=#{role}
     </select>
 </mapper>

@@ -14,4 +14,5 @@ public class Admin implements Serializable {
     private String password;
     //预留字段
     private String other;
+    private String salt;
 }

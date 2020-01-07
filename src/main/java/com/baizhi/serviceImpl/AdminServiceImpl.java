@@ -57,4 +57,13 @@ public class AdminServiceImpl implements AdminService {
             }
         }
     }
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<String> selectAllRole(String username) {
+        return ad.selectAllRole(username);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<String> selectAllPremission(String role) {
+        return ad.selectAllPremission(role);
+    }
 }
